@@ -1,0 +1,71 @@
+<div class="container">
+  <h1>Movies List</h1>
+  <br>
+  <button class="btn btn-primary" (click)="addNewMovie()">Add new Movie</button>
+<br>
+<table class="table table-sm table-hover">
+    <thead>
+      <tr>
+        <th *ngFor="let head of headElements" scope="col">{{head}} </th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr mdbTableCol *ngFor="let movie of Movies">
+        <th scope="row">{{movie.id}}</th>
+        <td style="cursor:pointer; color:blue; ;" (click)="onSelect(movie)">{{movie.title}}</td>
+        <td>{{movie.genre}}</td>
+        <td>{{movie.director}}</td>
+        <td>{{movie.yearCreated}}</td>
+        <td>
+            <a class="btn" data-toggle="modal" data-target="#exampleModalCenter" (click)="onUpdate(movie)"> 
+              <i class="fa fa-pencil-square-o" ></i>
+            </a>
+            <a class="btn text-danger" data-toggle="modal" data-target="#exampleModalCenter" (click)="onDelete(movie)">
+              <i class="fa fa-trash-o"></i>
+            </a>
+          </td>
+      </tr>
+    </tbody>
+  </table>
+</div>
+<!--Modal Functionality-->
+<div class="modal fade" id="exampleModalCenter" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title headers" id="exampleModalCenterTitle">{{formlabel}}</h5>
+        <button type="button" class="close headers" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <form [formGroup]="detailForm">
+          <div class="d-none">
+            <input type="text" formControlName="id" placeholder="id" name="id" class="form-control" id="id">
+          </div>
+          <div class="form-group">
+            <label class="headers" for="title">Title</label>
+            <!--If readonly is true OR false happens with Interpolation-->
+            <input type="text" formControlName="title"  name="title" class="form-control" id="title" [readonly]="readonly">
+          </div>  
+          <div class="form-group">
+            <label class="headers" for="genre">Genre:</label>
+            <input formControlName="genre" placeholder="genre" name="genre" class="form-control" id="genre" [readonly]="readonly">
+          </div>    
+          <div class="form-group">
+            <label class="headers" for="director">Director:</label>
+            <input formControlName="director" placeholder="director" name="director" class="form-control" id="director" [readonly]="readonly">
+          </div> 
+          <div class="form-group">
+            <label class="headers" for="yearCreated">Year Created:</label>
+            <input type="date | date:short" formControlName="yearCreated" placeholder="yearCreated" name="yearCreated" class="form-control" id="yearCreated" [readonly]="readonly">
+          </div>
+          <div class="modal-footer">
+            <button type="button" [class]="formButtonStyle" data-dismiss="modal" (click)="onConfirm()">{{formbutton}}</button>
+            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
